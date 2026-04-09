@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEREDITO — Inteligência de Decisão</title>
+<title>VEREDITO - Inteligencia de Decisao</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --gold:#D4A843;--gold-light:#F0C96A;--gold-dim:rgba(212,168,67,0.15);
+  --gold:#D4A843;--gold-light:#F0C96A;
   --bg:#0f172a;--bg2:#131e2e;--bg3:#1a2540;
   --text:#F0EDE6;--text-dim:rgba(240,237,230,0.6);--text-muted:rgba(240,237,230,0.35);
   --border:rgba(212,168,67,0.2);--border-dim:rgba(240,237,230,0.08);
   --green:#3DAA74;--green-bg:rgba(61,170,116,0.12);
   --amber-bg:rgba(212,168,67,0.1);
   --red:#C9584A;--red-bg:rgba(201,88,74,0.1);
-  --radius:14px;
 }
 html{height:100%;}
 body{
@@ -25,182 +24,89 @@ body{
   min-height:100vh;display:flex;flex-direction:column;align-items:center;
   justify-content:center;padding:24px;
 }
-/* SCREENS */
 .screen{display:none;width:100%;max-width:540px;animation:fadeUp .35s ease both;}
 .screen.active{display:flex;flex-direction:column;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
-
-/* CARD */
-.card{
-  background:var(--bg2);border:1px solid var(--border-dim);
-  border-radius:var(--radius);padding:40px 36px;width:100%;
-}
+.card{background:var(--bg2);border:1px solid var(--border-dim);border-radius:14px;padding:40px 36px;width:100%;}
 @media(max-width:480px){.card{padding:28px 22px;}}
-
-/* LOGO */
-.logo{
-  font-family:'Playfair Display',serif;font-size:13px;font-weight:700;
-  letter-spacing:0.18em;color:var(--gold);text-align:center;
-  margin-bottom:32px;
-}
+.logo{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;letter-spacing:0.18em;color:var(--gold);text-align:center;margin-bottom:32px;}
 .logo-line{width:24px;height:1px;background:var(--gold);opacity:0.5;display:inline-block;vertical-align:middle;margin:0 10px;}
-
-/* WELCOME */
-.welcome-title{
-  font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,40px);
-  font-weight:900;line-height:1.15;text-align:center;margin-bottom:16px;
-}
+.welcome-title{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,40px);font-weight:900;line-height:1.15;text-align:center;margin-bottom:16px;}
 .welcome-title em{font-style:italic;color:var(--gold-light);}
 .welcome-sub{font-size:15px;color:var(--text-dim);text-align:center;margin-bottom:32px;line-height:1.75;}
 .decision-label{font-size:12px;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
-.decision-input{
-  width:100%;background:var(--bg3);border:1px solid var(--border-dim);
-  border-radius:10px;padding:14px 18px;font-family:'DM Sans',sans-serif;
-  font-size:15px;color:var(--text);outline:none;transition:border-color .2s;
-}
+.decision-input{width:100%;background:var(--bg3);border:1px solid var(--border-dim);border-radius:10px;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .2s;}
 .decision-input::placeholder{color:var(--text-muted);}
 .decision-input:focus{border-color:var(--border);}
-.welcome-pillars{
-  display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 28px;justify-content:center;
-}
-.pillar-tag{
-  font-size:11px;padding:4px 12px;border:1px solid var(--border-dim);
-  border-radius:20px;color:var(--text-muted);
-}
-
-/* PROGRESS BAR */
+.welcome-pillars{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 28px;justify-content:center;}
+.pillar-tag{font-size:11px;padding:4px 12px;border:1px solid var(--border-dim);border-radius:20px;color:var(--text-muted);}
 .progress-wrap{margin-bottom:28px;}
-.progress-label{
-  display:flex;justify-content:space-between;
-  font-size:12px;color:var(--text-muted);margin-bottom:8px;
-}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px;}
 .progress-track{height:3px;background:var(--border-dim);border-radius:2px;}
 .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s ease;}
-
-/* QUESTION */
 .q-pilar{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.q-text{
-  font-family:'Playfair Display',serif;font-size:clamp(18px,3vw,22px);
-  font-weight:700;line-height:1.4;margin-bottom:8px;
-}
+.q-text{font-family:'Playfair Display',serif;font-size:clamp(17px,3vw,21px);font-weight:700;line-height:1.4;margin-bottom:8px;}
 .q-nota{font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.6;}
 .answers{display:flex;gap:12px;flex-direction:column;}
-.btn-answer{
-  width:100%;padding:16px 20px;border-radius:10px;
-  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;
-  border:1px solid var(--border-dim);cursor:pointer;
-  text-align:left;transition:all .15s;display:flex;align-items:center;gap:12px;
-}
+.btn-answer{width:100%;padding:16px 20px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;border:1px solid var(--border-dim);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:12px;}
 .btn-yes{background:var(--green-bg);color:var(--green);border-color:rgba(61,170,116,0.25);}
-.btn-yes:hover{background:rgba(61,170,116,0.2);border-color:rgba(61,170,116,0.5);transform:translateX(3px);}
+.btn-yes:hover{background:rgba(61,170,116,0.2);transform:translateX(3px);}
 .btn-no{background:var(--red-bg);color:var(--red);border-color:rgba(201,88,74,0.25);}
-.btn-no:hover{background:rgba(201,88,74,0.18);border-color:rgba(201,88,74,0.5);transform:translateX(3px);}
-.ans-icon{font-size:16px;flex-shrink:0;}
-
-.btn-back{
-  margin-top:16px;background:none;border:none;color:var(--text-muted);
-  font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;
-  display:flex;align-items:center;gap:6px;padding:4px 0;transition:color .2s;
-}
+.btn-no:hover{background:rgba(201,88,74,0.18);transform:translateX(3px);}
+.btn-back{margin-top:16px;background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 0;transition:color .2s;}
 .btn-back:hover{color:var(--text-dim);}
-.kbd{
-  display:inline-block;font-size:10px;padding:2px 6px;
-  border:1px solid var(--border-dim);border-radius:4px;color:var(--text-muted);
-}
-
-/* PAYWALL */
+.kbd{display:inline-block;font-size:10px;padding:2px 6px;border:1px solid var(--border-dim);border-radius:4px;color:var(--text-muted);}
 .paywall-icon{text-align:center;font-size:48px;margin-bottom:16px;}
-.paywall-title{
-  font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);
-  font-weight:900;text-align:center;margin-bottom:8px;line-height:1.3;
-}
+.paywall-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:900;text-align:center;margin-bottom:8px;line-height:1.3;}
 .paywall-title em{color:var(--gold-light);font-style:italic;}
 .paywall-sub{font-size:14px;color:var(--text-dim);text-align:center;margin-bottom:28px;line-height:1.7;}
-.paywall-preview{
-  background:var(--bg3);border:1px solid var(--border-dim);
-  border-radius:10px;padding:20px;margin-bottom:24px;
-}
+.paywall-preview{background:var(--bg3);border:1px solid var(--border-dim);border-radius:10px;padding:20px;margin-bottom:24px;}
 .paywall-preview-label{font-size:11px;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
-.blurred-row{
-  height:14px;border-radius:4px;background:rgba(240,237,230,0.06);
-  margin-bottom:8px;filter:blur(3px);
-}
+.blurred-row{height:14px;border-radius:4px;background:rgba(240,237,230,0.06);margin-bottom:8px;filter:blur(3px);}
 .blurred-row.w70{width:70%;}
 .blurred-row.w50{width:50%;}
 .blurred-row.w85{width:85%;}
-.lock-overlay{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-size:13px;color:var(--text-muted);margin-top:4px;
-}
-
-.price-tag{
-  text-align:center;margin-bottom:20px;
-}
-.price-main{
-  font-family:'Playfair Display',serif;font-size:42px;
-  font-weight:900;color:var(--gold);line-height:1;
-}
+.lock-overlay{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-muted);margin-top:4px;}
+.price-tag{text-align:center;margin-bottom:20px;}
+.price-main{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--gold);line-height:1;}
 .price-desc{font-size:13px;color:var(--text-muted);margin-top:4px;}
-
 .includes{list-style:none;margin-bottom:24px;}
-.includes li{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 0;border-bottom:1px solid var(--border-dim);
-  font-size:13px;color:var(--text-dim);
-}
+.includes li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-dim);font-size:13px;color:var(--text-dim);}
 .includes li:last-child{border-bottom:none;}
 .check{color:var(--green);font-size:14px;flex-shrink:0;}
-
-.btn-buy{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;padding:18px;background:var(--gold);color:#0C1117;
-  border:none;border-radius:10px;font-family:'DM Sans',sans-serif;
-  font-size:16px;font-weight:700;letter-spacing:0.05em;
-  text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;
-}
+.btn-buy{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:18px;background:var(--gold);color:#0C1117;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;}
 .btn-buy:hover{background:var(--gold-light);transform:translateY(-1px);}
-.btn-buy:active{transform:scale(0.99);}
 .buy-note{font-size:11px;color:var(--text-muted);text-align:center;margin-top:10px;}
-
-/* CTA PRINCIPAL */
-.btn-primary{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;padding:17px;background:var(--gold);color:#0C1117;
-  border:none;border-radius:10px;font-family:'DM Sans',sans-serif;
-  font-size:16px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
-  cursor:pointer;transition:all .2s;margin-top:8px;
-}
+.btn-primary{display:flex;align-items:center;justify-content:center;width:100%;padding:17px;background:var(--gold);color:#0C1117;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:8px;}
 .btn-primary:hover{background:var(--gold-light);}
-.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-primary:disabled{opacity:0.35;cursor:not-allowed;background:var(--gold);}
 </style>
 </head>
 <body>
 
-<!-- ── WELCOME ── -->
 <div class="screen active" id="screen-welcome">
   <div class="card">
     <div class="logo"><span class="logo-line"></span>VEREDITO<span class="logo-line"></span></div>
-    <h1 class="welcome-title">Qual decisão você precisa<br/><em>tomar agora?</em></h1>
-    <p class="welcome-sub">Digite abaixo e responda 10 perguntas.<br/>Você recebe um diagnóstico racional em menos de 5 minutos.</p>
-    <p class="decision-label">Sua decisão</p>
+    <h1 class="welcome-title">Qual decisao voce precisa<br/><em>tomar agora?</em></h1>
+    <p class="welcome-sub">Digite abaixo e responda 10 perguntas.<br/>Voce recebe um diagnostico racional em menos de 5 minutos.</p>
+    <p class="decision-label">Sua decisao</p>
     <input class="decision-input" id="decisao-input" type="text"
-      placeholder="Ex: Mudar de emprego, Abrir um negócio, Aceitar essa proposta…"
-      maxlength="120"/>
+      placeholder="Ex: Mudar de emprego, Abrir um negocio, Aceitar essa proposta..."
+      maxlength="120" oninput="checkInput()"/>
     <div class="welcome-pillars">
       <span class="pillar-tag">Reversibilidade</span>
       <span class="pillar-tag">Impacto financeiro</span>
-      <span class="pillar-tag">Emoção</span>
-      <span class="pillar-tag">Pressão externa</span>
+      <span class="pillar-tag">Emocao</span>
+      <span class="pillar-tag">Pressao externa</span>
       <span class="pillar-tag">Longo prazo</span>
       <span class="pillar-tag">Valores</span>
     </div>
     <button class="btn-primary" id="btn-start" disabled onclick="startQuiz()">
-      Iniciar Análise →
+      INICIAR ANALISE &rarr;
     </button>
   </div>
 </div>
 
-<!-- ── QUESTION ── -->
 <div class="screen" id="screen-question">
   <div class="card">
     <div class="logo"><span class="logo-line"></span>VEREDITO<span class="logo-line"></span></div>
@@ -216,181 +122,96 @@ body{
     <p class="q-nota" id="q-nota"></p>
     <div class="answers">
       <button class="btn-answer btn-yes" onclick="answer(true)">
-        <span class="ans-icon">✓</span>
+        <span>&#10003;</span>
         <span id="q-label-sim"></span>
       </button>
       <button class="btn-answer btn-no" onclick="answer(false)">
-        <span class="ans-icon">✗</span>
+        <span>&#10007;</span>
         <span id="q-label-nao"></span>
       </button>
     </div>
-    <button class="btn-back" id="btn-back" onclick="goBack()">
-      ← Voltar
+    <button class="btn-back" id="btn-back" onclick="goBack()" style="visibility:hidden">
+      &larr; Voltar
     </button>
     <div style="text-align:center;margin-top:16px;">
       <span class="kbd">S</span> Sim &nbsp;
-      <span class="kbd">N</span> Não &nbsp;
-      <span class="kbd">←</span> Voltar
+      <span class="kbd">N</span> Nao &nbsp;
+      <span class="kbd">&larr;</span> Voltar
     </div>
   </div>
 </div>
 
-<!-- ── PAYWALL ── -->
 <div class="screen" id="screen-paywall">
   <div class="card">
     <div class="logo"><span class="logo-line"></span>VEREDITO<span class="logo-line"></span></div>
-    <div class="paywall-icon">🔒</div>
-    <h2 class="paywall-title">Sua análise está<br/><em>pronta.</em></h2>
-    <p class="paywall-sub">Você respondeu as 10 perguntas. O diagnóstico completo — veredito, score e os 3 fatores decisivos — está aguardando.</p>
-
+    <div class="paywall-icon">&#128274;</div>
+    <h2 class="paywall-title">Sua analise esta<br/><em>pronta.</em></h2>
+    <p class="paywall-sub">Voce respondeu as 10 perguntas. O diagnostico completo esta aguardando.</p>
     <div class="paywall-preview">
-      <p class="paywall-preview-label">Prévia do seu resultado</p>
+      <p class="paywall-preview-label">Previa do seu resultado</p>
       <div class="blurred-row w85"></div>
       <div class="blurred-row w70"></div>
       <div class="blurred-row w50"></div>
-      <div class="lock-overlay">🔒 Desbloqueie para ver o resultado completo</div>
+      <div class="lock-overlay">&#128274; Desbloqueie para ver o resultado completo</div>
     </div>
-
     <div class="price-tag">
       <div class="price-main">R$9,97</div>
-      <div class="price-desc">Pagamento único · Acesso vitalício</div>
+      <div class="price-desc">Pagamento unico &middot; Acesso vitalicio</div>
     </div>
-
     <ul class="includes">
-      <li><span class="check">✓</span> Veredito: FAÇA, ESPERE ou NÃO FAÇA</li>
-      <li><span class="check">✓</span> Score detalhado 0–100</li>
-      <li><span class="check">✓</span> Os 3 fatores que mais pesaram na decisão</li>
-      <li><span class="check">✓</span> Recomendação personalizada</li>
-      <li><span class="check">✓</span> Use novamente para qualquer decisão futura</li>
+      <li><span class="check">&#10003;</span> Veredito: FACA, ESPERE ou NAO FACA</li>
+      <li><span class="check">&#10003;</span> Score detalhado 0-100</li>
+      <li><span class="check">&#10003;</span> Os 3 fatores que mais pesaram na decisao</li>
+      <li><span class="check">&#10003;</span> Recomendacao personalizada</li>
+      <li><span class="check">&#10003;</span> Use novamente para qualquer decisao futura</li>
     </ul>
-
-    <a id="btn-buy" class="btn-buy" href="#" target="_blank">
-      👉 DESBLOQUEAR MEU RESULTADO
+    <a id="btn-buy" class="btn-buy" href="https://pay.voompcreators.com.br/13757" target="_blank">
+      DESBLOQUEAR MEU RESULTADO
     </a>
-    <p class="buy-note">Garantia total de reembolso em 7 dias · Acesso imediato após pagamento</p>
+    <p class="buy-note">Garantia total de reembolso em 7 dias &middot; Acesso imediato apos pagamento</p>
   </div>
 </div>
 
 <script>
-// ─── PERGUNTAS ───────────────────────────────────────────────
-const QUESTIONS = [
-  {
-    pilar: "Reversibilidade",
-    pergunta: "Se essa decisão não der certo, você consegue desfazê-la ou corrigi-la sem grandes perdas?",
-    labelSim: "Sim, é reversível",
-    labelNao: "Não, é irreversível",
-    yesWeight: 3, noWeight: -4,
-    nota: "Decisões irreversíveis exigem muito mais certeza antes de agir."
-  },
-  {
-    pilar: "Impacto Financeiro",
-    pergunta: "O impacto financeiro está dentro do que você pode absorver sem comprometer sua estabilidade?",
-    labelSim: "Sim, está sob controle",
-    labelNao: "Não, o risco financeiro é alto",
-    yesWeight: 2, noWeight: -3,
-    nota: "Risco financeiro fora da sua capacidade de absorção é um sinal de alerta crítico."
-  },
-  {
-    pilar: "Informação",
-    pergunta: "Você tem informação suficiente sobre os riscos e consequências reais dessa decisão?",
-    labelSim: "Sim, estou bem informado",
-    labelNao: "Não, ainda faltam dados",
-    yesWeight: 2, noWeight: -2,
-    nota: "Decidir sem informação suficiente aumenta muito a chance de arrependimento."
-  },
-  {
-    pilar: "Opinião Externa",
-    pergunta: "Você consultou pelo menos uma pessoa de confiança que te deu uma opinião honesta sobre isso?",
-    labelSim: "Sim, já consultei",
-    labelNao: "Não, ainda não consultei",
-    yesWeight: 1, noWeight: -1,
-    nota: "Uma perspectiva externa reduz pontos cegos que você não consegue ver sozinho."
-  },
-  {
-    pilar: "Estabilidade Emocional",
-    pergunta: "Você está tomando essa decisão em um momento de equilíbrio emocional — sem euforia excessiva nem ansiedade elevada?",
-    labelSim: "Sim, estou equilibrado",
-    labelNao: "Não, estou em estado emocional alterado",
-    yesWeight: 2, noWeight: -3,
-    nota: "Decisões tomadas em estados emocionais extremos raramente são as melhores."
-  },
-  {
-    pilar: "Autonomia da Decisão",
-    pergunta: "Essa decisão é genuinamente sua — sem pressão de prazo artificial, terceiros ou medo de perder uma oportunidade?",
-    labelSim: "Sim, a decisão é autônoma",
-    labelNao: "Não, sinto pressão externa",
-    yesWeight: 2, noWeight: -3,
-    nota: "Decisões tomadas sob pressão externa costumam beneficiar quem pressiona, não quem decide."
-  },
-  {
-    pilar: "Visão de Longo Prazo",
-    pergunta: "Em 5 anos, você acredita que essa decisão vai te colocar em uma posição melhor do que a atual?",
-    labelSim: "Sim, vejo ganho no longo prazo",
-    labelNao: "Não tenho clareza sobre o futuro",
-    yesWeight: 3, noWeight: -2,
-    nota: "Decisões que não fazem sentido no longo prazo raramente valem o custo no curto prazo."
-  },
-  {
-    pilar: "Teste do Arrependimento",
-    pergunta: "Se você não tomar essa decisão agora, vai se arrepender daqui a 5 anos?",
-    labelSim: "Sim, me arrependeria de não agir",
-    labelNao: "Não, não me arrependeria",
-    yesWeight: 2, noWeight: 0,
-    nota: "O teste do arrependimento futuro é um dos filtros mais honestos que existem."
-  },
-  {
-    pilar: "Alinhamento de Valores",
-    pergunta: "Essa decisão está alinhada com seus valores e com o tipo de pessoa que você quer ser?",
-    labelSim: "Sim, está alinhada",
-    labelNao: "Não, existe um conflito interno",
-    yesWeight: 3, noWeight: -3,
-    nota: "Decidir contra seus valores gera desgaste interno que compromete a execução."
-  },
-  {
-    pilar: "Qualidade da Motivação",
-    pergunta: "Você está tomando essa decisão motivado por crescimento — e não para fugir de um problema ou situação ruim?",
-    labelSim: "Sim, é motivação de crescimento",
-    labelNao: "Não, é motivação de fuga",
-    yesWeight: 2, noWeight: -3,
-    nota: "Motivação de fuga cria novos problemas em vez de resolver os existentes."
-  }
+var QUESTIONS = [
+  {pilar:"Reversibilidade",pergunta:"Se essa decisao nao der certo, voce consegue desfaze-la ou corrigi-la sem grandes perdas?",labelSim:"Sim, e reversivel",labelNao:"Nao, e irreversivel",yesWeight:3,noWeight:-4,nota:"Decisoes irreversiveis exigem muito mais certeza antes de agir."},
+  {pilar:"Impacto Financeiro",pergunta:"O impacto financeiro esta dentro do que voce pode absorver sem comprometer sua estabilidade?",labelSim:"Sim, esta sob controle",labelNao:"Nao, o risco financeiro e alto",yesWeight:2,noWeight:-3,nota:"Risco financeiro fora da sua capacidade de absorcao e um sinal de alerta critico."},
+  {pilar:"Informacao",pergunta:"Voce tem informacao suficiente sobre os riscos e consequencias reais dessa decisao?",labelSim:"Sim, estou bem informado",labelNao:"Nao, ainda faltam dados",yesWeight:2,noWeight:-2,nota:"Decidir sem informacao suficiente aumenta muito a chance de arrependimento."},
+  {pilar:"Opiniao Externa",pergunta:"Voce consultou pelo menos uma pessoa de confianca que te deu uma opiniao honesta sobre isso?",labelSim:"Sim, ja consultei",labelNao:"Nao, ainda nao consultei",yesWeight:1,noWeight:-1,nota:"Uma perspectiva externa reduz pontos cegos que voce nao consegue ver sozinho."},
+  {pilar:"Estabilidade Emocional",pergunta:"Voce esta tomando essa decisao em um momento de equilibrio emocional?",labelSim:"Sim, estou equilibrado",labelNao:"Nao, estou em estado alterado",yesWeight:2,noWeight:-3,nota:"Decisoes tomadas em estados emocionais extremos raramente sao as melhores."},
+  {pilar:"Autonomia da Decisao",pergunta:"Essa decisao e genuinamente sua, sem pressao de prazo artificial ou terceiros?",labelSim:"Sim, a decisao e autonoma",labelNao:"Nao, sinto pressao externa",yesWeight:2,noWeight:-3,nota:"Decisoes tomadas sob pressao externa costumam beneficiar quem pressiona, nao quem decide."},
+  {pilar:"Visao de Longo Prazo",pergunta:"Em 5 anos, voce acredita que essa decisao vai te colocar em uma posicao melhor?",labelSim:"Sim, vejo ganho no longo prazo",labelNao:"Nao tenho clareza sobre o futuro",yesWeight:3,noWeight:-2,nota:"Decisoes que nao fazem sentido no longo prazo raramente valem o custo no curto prazo."},
+  {pilar:"Teste do Arrependimento",pergunta:"Se voce nao tomar essa decisao agora, vai se arrepender daqui a 5 anos?",labelSim:"Sim, me arrependeria de nao agir",labelNao:"Nao, nao me arrependeria",yesWeight:2,noWeight:0,nota:"O teste do arrependimento futuro e um dos filtros mais honestos que existem."},
+  {pilar:"Alinhamento de Valores",pergunta:"Essa decisao esta alinhada com seus valores e com o tipo de pessoa que voce quer ser?",labelSim:"Sim, esta alinhada",labelNao:"Nao, existe um conflito interno",yesWeight:3,noWeight:-3,nota:"Decidir contra seus valores gera desgaste interno que compromete a execucao."},
+  {pilar:"Qualidade da Motivacao",pergunta:"Voce esta tomando essa decisao motivado por crescimento, e nao para fugir de um problema?",labelSim:"Sim, e motivacao de crescimento",labelNao:"Nao, e motivacao de fuga",yesWeight:2,noWeight:-3,nota:"Motivacao de fuga cria novos problemas em vez de resolver os existentes."}
 ];
 
-const SCORE_MIN = -27;
-const SCORE_MAX = 22;
-const VOOMP_URL = https://pay.voompcreators.com.br/13757; // ← substitua pela URL real
+var SCORE_MIN = -27;
+var SCORE_MAX = 22;
+var currentIndex = 0;
+var score = 0;
+var answers = [];
+var history = [];
+var decisao = "";
 
-// ─── ESTADO ──────────────────────────────────────────────────
-let currentIndex = 0;
-let score = 0;
-let answers = [];
-let history = [];
-let decisao = "";
-
-// ─── WELCOME ─────────────────────────────────────────────────
-const input = document.getElementById('decisao-input');
-const btnStart = document.getElementById('btn-start');
-
-input.addEventListener('input', () => {
-  btnStart.disabled = input.value.trim().length < 3;
-});
-input.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !btnStart.disabled) startQuiz();
-});
+function checkInput() {
+  var val = document.getElementById('decisao-input').value.trim();
+  document.getElementById('btn-start').disabled = val.length < 3;
+}
 
 function startQuiz() {
-  decisao = input.value.trim();
+  decisao = document.getElementById('decisao-input').value.trim();
+  if (decisao.length < 3) return;
   currentIndex = 0; score = 0; answers = []; history = [];
   showScreen('screen-question');
   renderQuestion();
 }
 
-// ─── PERGUNTA ────────────────────────────────────────────────
 function renderQuestion() {
-  const q = QUESTIONS[currentIndex];
-  const pct = (currentIndex / QUESTIONS.length) * 100;
+  var q = QUESTIONS[currentIndex];
+  var pct = (currentIndex / QUESTIONS.length) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('q-count').textContent = `Pergunta ${currentIndex + 1} de ${QUESTIONS.length}`;
+  document.getElementById('q-count').textContent = 'Pergunta ' + (currentIndex+1) + ' de 10';
   document.getElementById('q-pilar-tag').textContent = q.pilar;
   document.getElementById('q-pilar').textContent = q.pilar;
   document.getElementById('q-text').textContent = q.pergunta;
@@ -401,9 +222,9 @@ function renderQuestion() {
 }
 
 function answer(isYes) {
-  const q = QUESTIONS[currentIndex];
-  const peso = isYes ? q.yesWeight : q.noWeight;
-  history.push({ index: currentIndex, score, answers: [...answers] });
+  var q = QUESTIONS[currentIndex];
+  var peso = isYes ? q.yesWeight : q.noWeight;
+  history.push({index: currentIndex, score: score, answers: answers.slice()});
   score += peso;
   answers[currentIndex] = isYes;
   if (currentIndex < QUESTIONS.length - 1) {
@@ -416,58 +237,45 @@ function answer(isYes) {
 
 function goBack() {
   if (history.length === 0) return;
-  const prev = history.pop();
+  var prev = history.pop();
   currentIndex = prev.index;
   score = prev.score;
   answers = prev.answers;
   renderQuestion();
 }
 
-// ─── PAYWALL ─────────────────────────────────────────────────
 function showPaywall() {
-  // Monta URL de resultado com parâmetros para a página de entrega
-  const scoreNorm = Math.round(((score - SCORE_MIN) / (SCORE_MAX - SCORE_MIN)) * 100);
-
-  // Calcula destaques (top 3 pesos absolutos)
-  const pesos = answers.map((isYes, i) => ({
-    i, peso: isYes ? QUESTIONS[i].yesWeight : QUESTIONS[i].noWeight
-  }));
-  const top3 = pesos
-    .filter(p => p.peso !== 0)
-    .sort((a,b) => Math.abs(b.peso) - Math.abs(a.peso))
+  var scoreNorm = Math.round(((score - SCORE_MIN) / (SCORE_MAX - SCORE_MIN)) * 100);
+  var pesos = answers.map(function(isYes, i) {
+    return {i: i, peso: isYes ? QUESTIONS[i].yesWeight : QUESTIONS[i].noWeight};
+  });
+  var top3 = pesos
+    .filter(function(p) { return p.peso !== 0; })
+    .sort(function(a,b) { return Math.abs(b.peso) - Math.abs(a.peso); })
     .slice(0,3)
-    .map(p => p.i)
+    .map(function(p) { return p.i; })
     .join(',');
 
-  const resultURL = `veredito-resultado.html?score=${scoreNorm}&decisao=${encodeURIComponent(decisao)}&top=${top3}&respostas=${answers.map(a=>a?1:0).join('')}`;
-
-  // O link de compra leva à Voomp com o resultado como parâmetro de redirect
-  // Configure na Voomp: URL de entrega = resultURL (hospedado no seu servidor)
-  const buyURL = VOOMP_URL; // A Voomp vai redirecionar para veredito-resultado.html após pagamento
-  document.getElementById('btn-buy').href = buyURL;
-
-  // Salva resultado no sessionStorage para a página de resultado
   sessionStorage.setItem('veredito_score', scoreNorm);
   sessionStorage.setItem('veredito_decisao', decisao);
   sessionStorage.setItem('veredito_top3', top3);
-  sessionStorage.setItem('veredito_respostas', answers.map(a=>a?1:0).join(''));
+  sessionStorage.setItem('veredito_respostas', answers.map(function(a){return a?1:0;}).join(''));
 
   showScreen('screen-paywall');
 }
 
-// ─── NAVEGAÇÃO ───────────────────────────────────────────────
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
   document.getElementById(id).classList.add('active');
 }
 
-// ─── TECLADO ─────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  const activeScreen = document.querySelector('.screen.active')?.id;
-  if (activeScreen !== 'screen-question') return;
-  if (e.key.toLowerCase() === 's' || e.key === 'ArrowLeft') answer(true);
-  if (e.key.toLowerCase() === 'n' || e.key === 'ArrowRight') answer(false);
-  if (e.key === 'Backspace') goBack();
+document.addEventListener('keydown', function(e) {
+  var active = document.querySelector('.screen.active');
+  if (!active || active.id !== 'screen-question') return;
+  if (e.key.toLowerCase() === 's') answer(true);
+  if (e.key.toLowerCase() === 'n') answer(false);
+  if (e.key === 'Backspace') { e.preventDefault(); goBack(); }
 });
 </script>
 </body>
