@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VEREDITO — Seu Resultado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#D4A843;--gold-light:#F0C96A;
+  --bg:#0f172a;--bg2:#131e2e;--bg3:#1a2540;
+  --text:#F0EDE6;--text-dim:rgba(240,237,230,0.6);--text-muted:rgba(240,237,230,0.35);
+  --border:rgba(212,168,67,0.2);--border-dim:rgba(240,237,230,0.08);
+  --green:#3DAA74;--green-bg:rgba(61,170,116,0.12);
+  --amber-bg:rgba(212,168,67,0.1);
+  --amber-text:#D4A843;
+  --red:#C9584A;--red-bg:rgba(201,88,74,0.1);
+}
+html{height:100%;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-weight:400;line-height:1.7;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;padding:24px 24px 60px;
+}
+.wrap{width:100%;max-width:540px;animation:fadeUp .4s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+.logo{
+  font-family:'Playfair Display',serif;font-size:13px;font-weight:700;
+  letter-spacing:0.18em;color:var(--gold);text-align:center;
+  padding:32px 0 28px;
+}
+.logo-line{width:24px;height:1px;background:var(--gold);opacity:0.5;display:inline-block;vertical-align:middle;margin:0 10px;}
+
+/* VERDICT CARD */
+.verdict-card{
+  background:var(--bg2);border:1px solid var(--border-dim);
+  border-radius:16px;padding:36px 32px;margin-bottom:16px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.verdict-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.verdict-card.faca::before{background:linear-gradient(90deg,#3DAA74,#6DD4A0);}
+.verdict-card.espere::before{background:linear-gradient(90deg,#D4A843,#F0C96A);}
+.verdict-card.naofaca::before{background:linear-gradient(90deg,#C9584A,#E07068);}
+
+.decisao-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:6px;
+}
+.decisao-text{
+  font-family:'Playfair Display',serif;font-size:16px;font-style:italic;
+  color:var(--text-dim);margin-bottom:24px;
+}
+
+.verdict-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 28px;border-radius:40px;
+  font-family:'Playfair Display',serif;font-size:26px;font-weight:900;
+  margin-bottom:12px;border:1px solid transparent;
+}
+.verdict-badge.faca{background:var(--green-bg);color:var(--green);border-color:rgba(61,170,116,0.3);}
+.verdict-badge.espere{background:var(--amber-bg);color:var(--amber-text);border-color:rgba(212,168,67,0.3);}
+.verdict-badge.naofaca{background:var(--red-bg);color:var(--red);border-color:rgba(201,88,74,0.3);}
+
+.verdict-diagnostico{
+  font-size:13px;color:var(--text-muted);margin-bottom:20px;letter-spacing:0.05em;
+}
+
+/* SCORE BAR */
+.score-section{margin:0 0 24px;}
+.score-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:6px;}
+.score-track{height:8px;background:var(--border-dim);border-radius:4px;overflow:hidden;}
+.score-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+.score-fill.faca{background:linear-gradient(90deg,#3DAA74,#6DD4A0);}
+.score-fill.espere{background:linear-gradient(90deg,#D4A843,#F0C96A);}
+.score-fill.naofaca{background:linear-gradient(90deg,#C9584A,#E07068);}
+.score-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;margin-top:10px;}
+.score-num.faca{color:var(--green);}
+.score-num.espere{color:var(--amber-text);}
+.score-num.naofaca{color:var(--red);}
+
+/* RECOMENDAÇÃO */
+.recomendacao{
+  background:var(--bg3);border:1px solid var(--border-dim);
+  border-radius:10px;padding:18px 20px;
+  font-size:14px;color:var(--text-dim);line-height:1.8;
+  text-align:left;
+}
+
+/* DESTAQUES */
+.section-card{
+  background:var(--bg2);border:1px solid var(--border-dim);
+  border-radius:16px;padding:28px 28px;margin-bottom:16px;
+}
+.section-label{
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;
+}
+.destaque-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--border-dim);
+}
+.destaque-row:last-child{border-bottom:none;}
+.destaque-dir{
+  width:24px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;margin-top:1px;
+}
+.destaque-dir.up{background:var(--green-bg);color:var(--green);}
+.destaque-dir.down{background:var(--red-bg);color:var(--red);}
+.destaque-content{}
+.destaque-pilar{font-size:14px;font-weight:500;margin-bottom:2px;}
+.destaque-nota{font-size:12px;color:var(--text-muted);line-height:1.6;}
+
+/* PRO UPSELL */
+.pro-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:28px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.pro-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+}
+.pro-badge{
+  display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.1em;
+  text-transform:uppercase;padding:3px 10px;
+  background:var(--amber-bg);color:var(--gold);
+  border:1px solid var(--border);border-radius:20px;margin-bottom:12px;
+}
+.pro-title{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  margin-bottom:8px;
+}
+.pro-title em{font-style:italic;color:var(--gold-light);}
+.pro-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px;line-height:1.7;}
+.pro-list{list-style:none;margin-bottom:20px;}
+.pro-list li{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--text-dim);padding:5px 0;
+  border-bottom:1px solid var(--border-dim);
+}
+.pro-list li:last-child{border-bottom:none;}
+.pro-check{color:var(--gold);font-size:13px;}
+.btn-pro{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px;background:var(--gold);color:#0C1117;
+  border:none;border-radius:10px;font-family:'DM Sans',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;text-decoration:none;
+}
+.btn-pro:hover{background:var(--gold-light);}
+
+/* COPIAR */
+.btn-copy{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;background:transparent;
+  border:1px solid var(--border-dim);border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-dim);
+  cursor:pointer;transition:all .2s;margin-bottom:16px;
+}
+.btn-copy:hover{border-color:var(--border);color:var(--text);}
+
+/* FOOTER */
+.result-footer{
+  font-size:11px;color:var(--text-muted);text-align:center;
+  line-height:1.7;max-width:420px;margin:8px auto 0;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo"><span class="logo-line"></span>VEREDITO<span class="logo-line"></span></div>
+
+  <!-- VERDICT CARD -->
+  <div class="verdict-card" id="verdict-card">
+    <p class="decisao-label">Decisão analisada</p>
+    <p class="decisao-text" id="decisao-text">"…"</p>
+    <div class="verdict-badge" id="verdict-badge">…</div>
+    <p class="verdict-diagnostico" id="verdict-diagnostico"></p>
+    <div class="score-section">
+      <div class="score-bar-labels"><span>Risco elevado</span><span>Seguro para agir</span></div>
+      <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+      <div class="score-num" id="score-num"></div>
+    </div>
+    <div class="recomendacao" id="recomendacao"></div>
+  </div>
+
+  <!-- DESTAQUES -->
+  <div class="section-card" id="destaques-card">
+    <p class="section-label">Fatores mais decisivos</p>
+    <div id="destaques-list"></div>
+  </div>
+
+  <!-- COPIAR -->
+  <button class="btn-copy" id="btn-copy" onclick="copiarResultado()">
+    📋 Copiar resultado
+  </button>
+
+  <!-- PRO UPSELL -->
+  <div class="pro-card" id="pro-card">
+    <span class="pro-badge">🛡 VEREDITO PRO</span>
+    <h3 class="pro-title">Precisa de uma análise<br/><em>ainda mais profunda?</em></h3>
+    <p class="pro-sub">O VEREDITO PRO expande sua análise para 25 pilares e gera um relatório completo em PDF — ideal para decisões de alto impacto.</p>
+    <ul class="pro-list">
+      <li><span class="pro-check">✦</span> 25 pilares de análise (vs 10 da versão básica)</li>
+      <li><span class="pro-check">✦</span> Relatório completo em PDF para guardar e compartilhar</li>
+      <li><span class="pro-check">✦</span> Análise comparativa entre duas alternativas</li>
+      <li><span class="pro-check">✦</span> Modo Dupla — compare sua análise com a de um sócio ou parceiro</li>
+    </ul>
+    <a class="btn-pro" href="COLE_AQUI_URL_DO_PRO" target="_blank">
+      ✦ CONHECER O VEREDITO PRO — R$29,97
+    </a>
+  </div>
+
+  <p class="result-footer">
+    O VEREDITO é uma ferramenta de apoio à decisão e não substitui orientação profissional em situações jurídicas, médicas ou financeiras complexas.
+  </p>
+</div>
+
+<script>
+// ─── DADOS ───────────────────────────────────────────────────
+const QUESTIONS = [
+  { pilar:"Reversibilidade", nota:"Decisões irreversíveis exigem muito mais certeza antes de agir.", yesWeight:3, noWeight:-4 },
+  { pilar:"Impacto Financeiro", nota:"Risco financeiro fora da sua capacidade de absorção é um sinal de alerta crítico.", yesWeight:2, noWeight:-3 },
+  { pilar:"Informação", nota:"Decidir sem informação suficiente aumenta muito a chance de arrependimento.", yesWeight:2, noWeight:-2 },
+  { pilar:"Opinião Externa", nota:"Uma perspectiva externa reduz pontos cegos que você não consegue ver sozinho.", yesWeight:1, noWeight:-1 },
+  { pilar:"Estabilidade Emocional", nota:"Decisões tomadas em estados emocionais extremos raramente são as melhores.", yesWeight:2, noWeight:-3 },
+  { pilar:"Autonomia da Decisão", nota:"Decisões tomadas sob pressão externa costumam beneficiar quem pressiona, não quem decide.", yesWeight:2, noWeight:-3 },
+  { pilar:"Visão de Longo Prazo", nota:"Decisões que não fazem sentido no longo prazo raramente valem o custo no curto prazo.", yesWeight:3, noWeight:-2 },
+  { pilar:"Teste do Arrependimento", nota:"O teste do arrependimento futuro é um dos filtros mais honestos que existem.", yesWeight:2, noWeight:0 },
+  { pilar:"Alinhamento de Valores", nota:"Decidir contra seus valores gera desgaste interno que compromete a execução.", yesWeight:3, noWeight:-3 },
+  { pilar:"Qualidade da Motivação", nota:"Motivação de fuga cria novos problemas em vez de resolver os existentes.", yesWeight:2, noWeight:-3 }
+];
+
+const RESULTADOS = {
+  faca: {
+    emoji:"✅", label:"FAÇA",
+    diagnostico:"Fundamentos sólidos",
+    recomendacao:"Os pilares analisados indicam que essa decisão tem base racional e emocional consistente. Agir agora evita a perda de oportunidade por excesso de cautela. Você está preparado para o próximo passo."
+  },
+  espere: {
+    emoji:"⚠️", label:"ESPERE",
+    diagnostico:"Variáveis ainda abertas",
+    recomendacao:"Existem lacunas de informação ou incertezas que ainda não foram resolvidas. Busque dados concretos, consulte alguém de confiança e reavalie antes de comprometer recursos ou energia."
+  },
+  naofaca: {
+    emoji:"🛑", label:"NÃO FAÇA",
+    diagnostico:"Risco elevado identificado",
+    recomendacao:"A análise detectou fatores críticos — pressão externa, instabilidade emocional ou risco irreversível — que recomendam suspender ou abandonar o plano atual. Proteger sua posição também é uma decisão estratégica."
+  }
+};
+
+// ─── LÊ PARÂMETROS ───────────────────────────────────────────
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  // Tenta URL params primeiro, depois sessionStorage (fallback)
+  return {
+    score: parseInt(params.get('score')) || parseInt(sessionStorage.getItem('veredito_score')) || 50,
+    decisao: params.get('decisao') || sessionStorage.getItem('veredito_decisao') || 'sua decisão',
+    top3: (params.get('top') || sessionStorage.getItem('veredito_top3') || '0,6,8').split(',').map(Number),
+    respostas: (params.get('respostas') || sessionStorage.getItem('veredito_respostas') || '1010101010').split('').map(Number)
+  };
+}
+
+// ─── RENDER ──────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  const { score, decisao, top3, respostas } = getParams();
+
+  // Determina veredicto
+  let tipo;
+  if (score >= 65) tipo = 'faca';
+  else if (score >= 35) tipo = 'espere';
+  else tipo = 'naofaca';
+
+  const res = RESULTADOS[tipo];
+
+  // Decisão
+  document.getElementById('decisao-text').textContent = `"${decisao}"`;
+
+  // Badge e card
+  const badge = document.getElementById('verdict-badge');
+  const card = document.getElementById('verdict-card');
+  badge.className = `verdict-badge ${tipo}`;
+  badge.textContent = `${res.emoji} ${res.label}`;
+  card.className = `verdict-card ${tipo}`;
+
+  // Diagnóstico
+  document.getElementById('verdict-diagnostico').textContent = `${res.diagnostico} · Score ${score}/100`;
+
+  // Score bar
+  const fill = document.getElementById('score-fill');
+  fill.className = `score-fill ${tipo}`;
+  setTimeout(() => fill.style.width = score + '%', 100);
+  const scoreNum = document.getElementById('score-num');
+  scoreNum.className = `score-num ${tipo}`;
+  scoreNum.textContent = score + '/100';
+
+  // Recomendação
+  document.getElementById('recomendacao').textContent = res.recomendacao;
+
+  // Destaques
+  const list = document.getElementById('destaques-list');
+  top3.forEach(idx => {
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    const q = QUESTIONS[idx];
+    const resp = respostas[idx];
+    const peso = resp === 1 ? q.yesWeight : q.noWeight;
+    const isUp = peso > 0;
+    list.innerHTML += `
+      <div class="destaque-row">
+        <div class="destaque-dir ${isUp ? 'up' : 'down'}">${isUp ? '↑' : '↓'}</div>
+        <div class="destaque-content">
+          <p class="destaque-pilar">${q.pilar}</p>
+          <p class="destaque-nota">${q.nota}</p>
+        </div>
+      </div>`;
+  });
+
+  // Confete se FAÇA
+  if (tipo === 'faca' && typeof confetti !== 'undefined') {
+    setTimeout(() => {
+      confetti({ particleCount: 120, spread: 70, origin: { y: 0.5 }, colors: ['#D4A843','#F0C96A','#3DAA74'] });
+    }, 500);
+  }
+});
+
+// ─── COPIAR ──────────────────────────────────────────────────
+function copiarResultado() {
+  const { score, decisao, top3, respostas } = getParams();
+  let tipo = score >= 65 ? 'faca' : score >= 35 ? 'espere' : 'naofaca';
+  const res = RESULTADOS[tipo];
+
+  let destaques = top3.map(idx => {
+    if (idx < 0 || idx >= QUESTIONS.length) return '';
+    const q = QUESTIONS[idx];
+    const peso = respostas[idx] === 1 ? q.yesWeight : q.noWeight;
+    return `  ${peso > 0 ? '↑' : '↓'} ${q.pilar}: ${q.nota}`;
+  }).join('\n');
+
+  const texto = `🧠 VEREDITO — Inteligência de Decisão
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Decisão analisada: "${decisao}"
+
+${res.emoji} VEREDITO: ${res.label}
+Score: ${score}/100 — ${res.diagnostico}
+
+📋 Fatores decisivos:
+${destaques}
+
+💡 Recomendação:
+${res.recomendacao}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analise sua próxima decisão em veredito.app`;
+
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copiado!';
+    setTimeout(() => btn.innerHTML = '📋 Copiar resultado', 2000);
+  });
+}
+</script>
+</body>
+</html>
